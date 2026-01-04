@@ -73,12 +73,20 @@ ZSH_THEME="edvardm"
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting) 
 
 source $ZSH/oh-my-zsh.sh
+autoload -Uz vcs_info
+
+precmd() {
+  vcs_info
+}
+
+zstyle ':vcs_info:git:*' formats ' (%b)'
 
 # User configuration
 
 # Override prompt to show absolute path instead of relative
 # PROMPT='%{$fg_bold[blue]%}%~ %{$fg_bold[red]%}➜  %{$reset_color%}'
-PROMPT='${VIRTUAL_ENV:+(${VIRTUAL_ENV##*/}) }%{$fg_bold[blue]%}%~ %{$fg[red]%}$(git branch --show-current 2>/dev/null | sed "s/^/(/;s/$/)/")%{$fg_bold[red]%} ➜  %{$reset_color%}'
+PROMPT='${VIRTUAL_ENV:+(${VIRTUAL_ENV##*/}) }%{$fg_bold[blue]%}%~%{$fg_bold[red]%}${vcs_info_msg_0_} ➜  %{$reset_color%}'
+
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
