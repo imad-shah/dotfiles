@@ -16,7 +16,7 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # -------------------------
 alias ..='cd ..'
 alias cc='claude --dangerously-skip-permissions'
-alias co='codex -- --full-auto'
+alias co='codex --yolo'
 alias quota='quota-axi --tui'
 alias szsh='source ~/.zshrc'
 
