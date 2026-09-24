@@ -1,15 +1,14 @@
 # -------------------------
-# Zsh autosuggestions
+# Platform-specific setup
 # -------------------------
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# Accept autosuggestion with Ctrl+F
-bindkey '^f' autosuggest-accept
-
-# -------------------------
-# Zsh syntax highlighting
-# -------------------------
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+case "$(uname -s)" in
+    Darwin)
+        source "$HOME/dotfiles/zsh/platform/macos.zsh"
+        ;;
+    Linux)
+        source "$HOME/dotfiles/zsh/platform/linux.zsh"
+        ;;
+esac
 
 # -------------------------
 # Aliases
@@ -19,6 +18,7 @@ alias cc='claude --dangerously-skip-permissions'
 alias co='codex --yolo'
 alias quota='quota-axi --tui'
 alias szsh='source ~/.zshrc'
+alias zshrc='nvim ~/dotfiles/zsh/.zshrc'
 
 # -------------------------
 # Editor
@@ -26,7 +26,11 @@ alias szsh='source ~/.zshrc'
 export EDITOR='nvim'
 
 # -------------------------
+# Local binaries
+# -------------------------
+export PATH="$HOME/.local/bin:$PATH"
+
+# -------------------------
 # Starship prompt
 # -------------------------
 eval "$(starship init zsh)"
-export PATH="$HOME/.local/bin:$PATH"
