@@ -5,7 +5,7 @@ function M.apply(config, wezterm)
     config.window_close_confirmation = "NeverPrompt"
 
     config.font_size = 14.0
-    config.window_background_opacity = 0.65
+    config.window_background_opacity = 0.6
     config.text_background_opacity = 1.0
     config.win32_system_backdrop = "Acrylic"
 
