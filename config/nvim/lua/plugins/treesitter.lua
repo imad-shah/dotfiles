@@ -7,15 +7,14 @@ return {
             highlight = { enable = true },
             indent = { enable = true },
             ensure_installed = {
-                -- the three languages you actually edit
                 "python",
                 "go",
                 "lua",
-                -- their companions
+
                 "gomod",
                 "gosum",
                 "luadoc",
-                -- config / docs files you open alongside them
+
                 "bash",
                 "json",
                 "yaml",
