@@ -22,7 +22,7 @@ return {
     --         enable_transparency()
     --     end
     -- },
-    -- Flow
+    -- Flow (commented out - uncomment to switch back)
     -- {
     --     "0xstepit/flow.nvim",
     --     lazy = false,
@@ -43,7 +43,7 @@ return {
     --         -- enable_transparency()
     --     end
     -- },
-    -- Dracula
+    -- Dracula (commented out - uncomment to switch back)
     -- {
     --     "Mofiqul/dracula.nvim",
     --     config = function()
@@ -51,7 +51,7 @@ return {
     --         -- enable_transparency()
     --     end
     -- },
-    -- Onedark
+    -- Onedark (commented out - uncomment to switch back)
     {
         "navarasu/onedark.nvim",
         priority = 1000,
@@ -63,13 +63,13 @@ return {
             enable_transparency()
         end,
     },
-    {
-        "nvim-lualine/lualine.nvim",
-        dependencies = {
-            "nvim-tree/nvim-web-devicons",
-        },
-        opts = {
-            theme = "auto",
-        },
-    },
+    -- {
+    --     "nvim-lualine/lualine.nvim",
+    --     dependencies = {
+    --         "nvim-tree/nvim-web-devicons",
+    --     },
+    --     opts = {
+    --         theme = "auto",
+    --     },
+    -- },
 }
