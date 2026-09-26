@@ -22,7 +22,7 @@ return {
     --         enable_transparency()
     --     end
     -- },
-    -- Flow (commented out - uncomment to switch back)
+    -- Flow
     -- {
     --     "0xstepit/flow.nvim",
     --     lazy = false,
@@ -43,7 +43,7 @@ return {
     --         -- enable_transparency()
     --     end
     -- },
-    -- Dracula (commented out - uncomment to switch back)
+    -- Dracula
     -- {
     --     "Mofiqul/dracula.nvim",
     --     config = function()
@@ -51,7 +51,7 @@ return {
     --         -- enable_transparency()
     --     end
     -- },
-    -- Onedark (commented out - uncomment to switch back)
+    -- Onedark
     {
         "navarasu/onedark.nvim",
         priority = 1000,
