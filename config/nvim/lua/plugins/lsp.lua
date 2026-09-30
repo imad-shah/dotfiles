@@ -16,6 +16,7 @@ return {
             lua = true,
             python = true,
             go = true,
+            rust = true,
         }
 
         local fmt_group = vim.api.nvim_create_augroup('UserLspFormat', { clear = true })
@@ -98,6 +99,14 @@ return {
                 vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, opts)
                 vim.keymap.set({ 'n', 'x' }, '<F3>', function() vim.lsp.buf.format({ async = true }) end, opts)
                 vim.keymap.set('n', '<F4>', vim.lsp.buf.code_action, opts)
+
+                -- Inlay hints (inferred types, parameter names): Neovim keeps
+                -- them off until asked, even when the server is set to send them.
+                vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+                vim.keymap.set('n', '<leader>ih', function()
+                    local on = vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf })
+                    vim.lsp.inlay_hint.enable(not on, { bufnr = event.buf })
+                end, { buffer = event.buf, desc = 'Toggle inlay hints' })
             end,
         })
 
@@ -163,6 +172,8 @@ return {
                 "ruff",
                 "gopls",
             },
+            -- rustaceanvim owns rust-analyzer; never let Mason start a second copy.
+            automatic_enable = { exclude = { 'rust_analyzer' } },
         })
 
         local cmp = require('cmp')
