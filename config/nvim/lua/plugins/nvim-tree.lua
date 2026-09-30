@@ -8,16 +8,14 @@ return {
         require("nvim-tree").setup({
             view = {
                 relativenumber = true,
-                width = 30,
-            },
-            filters = {
-                dotfiles = false,
             },
         })
 
         -- auto-close nvim when the tree is the last window
         vim.api.nvim_create_autocmd("QuitPre", {
             callback = function()
+                -- quitting from the tree itself: closing it here would abort :qa
+                if vim.bo.filetype == "NvimTree" then return end
                 local tree_wins = {}
                 local floating_wins = {}
                 local wins = vim.api.nvim_list_wins()
