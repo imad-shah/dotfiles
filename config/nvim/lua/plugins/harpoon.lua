@@ -9,7 +9,7 @@ local function toggle_telescope(harpoon_files)
         table.insert(file_paths, item.value)
     end
     local opts = themes.get_ivy({
-        promt_title = "Working List"
+        prompt_title = "Working List"
     })
 
     require("telescope.pickers").new(opts, {

@@ -12,6 +12,6 @@ vim.api.nvim_create_autocmd('FileType', {
     pattern = vim.tbl_keys(runners),
     callback = function(args)
         vim.keymap.set('n', '<F5>', runners[vim.bo[args.buf].filetype],
-            { buffer = args.buf, noremap = true, silent = true })
+            { buffer = args.buf, silent = true })
     end,
 })

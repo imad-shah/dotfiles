@@ -8,7 +8,6 @@ return {
         'hrsh7th/cmp-path',
         'saadparwaiz1/cmp_luasnip',
         'hrsh7th/cmp-nvim-lsp',
-        'hrsh7th/cmp-nvim-lua',
         'L3MON4D3/LuaSnip',
         'rafamadriz/friendly-snippets',
     },
@@ -72,8 +71,6 @@ return {
             virtual_text = true,
             severity_sort = true,
             float = {
-                style = 'minimal',
-                border = 'rounded',
                 header = '',
                 prefix = '',
             },
@@ -91,7 +88,6 @@ return {
             callback = function(event)
                 local opts = { buffer = event.buf }
 
-                vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
                 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
                 vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
                 vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
@@ -114,7 +110,6 @@ return {
             settings = {
                 Lua = {
                     runtime = { version = 'LuaJIT' },
-                    diagnostics = { globals = { 'vim' } },
                     workspace = {
                         library = { vim.env.VIMRUNTIME },
                         checkThirdParty = false,
@@ -130,11 +125,6 @@ return {
                     -- 'all' produces on untyped code.
                     analysis = {
                         typeCheckingMode = 'standard',
-                        diagnosticMode = 'openFilesOnly',
-                        inlayHints = {
-                            variableTypes = true,
-                            functionReturnTypes = true,
-                        },
                     },
                 },
             },
@@ -150,11 +140,6 @@ return {
         vim.lsp.config('gopls', {
             settings = {
                 gopls = {
-                    analyses = {
-                        unusedparams = true,
-                        unusedwrite = true,
-                        nilness = true,
-                    },
                     staticcheck = true,
                     gofumpt = true,
                     -- gopls ships these off; without them Go gets
@@ -170,7 +155,7 @@ return {
             },
         })
 
-        require('mason').setup({})
+        require('mason').setup()
         require('mason-lspconfig').setup({
             ensure_installed = {
                 "lua_ls",
@@ -178,7 +163,6 @@ return {
                 "ruff",
                 "gopls",
             },
-            automatic_enable = true,
         })
 
         local cmp = require('cmp')

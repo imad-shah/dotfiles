@@ -1,6 +1,5 @@
 return {
     "karb94/neoscroll.nvim",
-    config = function()
-        require('neoscroll').setup({})
-    end
+    -- neoscroll's default mappings minus <C-e>, which is harpoon's quick menu
+    opts = { mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "zt", "zz", "zb" } },
 }
