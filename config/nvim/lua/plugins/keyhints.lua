@@ -1,4 +1,5 @@
-return {
-    "imad-shah/keyhints.nvim",
-    opts = {},
-}
+-- return {
+--     "imad-shah/keyhints.nvim",
+--     opts = {},
+-- }
+return {}
