@@ -18,7 +18,7 @@ Plugins:
 
 ## Setup
 
-Clone to `~/dotfiles` (`.zshrc` expects it there), move any existing configs out of the way, then link them in
+Clone to `~/dotfiles`, move any existing configs out of the way, then link them in
 
 macOS and WSL:
 
@@ -28,10 +28,10 @@ mkdir -p ~/.config
 ln -s ~/dotfiles/config/nvim ~/.config/nvim
 ln -s ~/dotfiles/config/starship.toml ~/.config/starship.toml
 ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
-ln -s ~/dotfiles/config/wezterm ~/.config/wezterm  # macOS only
+ln -s ~/dotfiles/config/wezterm ~/.config/wezterm  # macOS specific
 ```
 
-Windows, where WezTerm runs outside WSL (PowerShell, with Developer Mode on):
+Windows, since WezTerm runs outside WSL (PowerShell):
 
 ```powershell
 New-Item -ItemType SymbolicLink -Path "$HOME\.config\wezterm" -Target "\\wsl.localhost\FedoraLinux-42\home\<user>\dotfiles\config\wezterm"
