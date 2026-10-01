@@ -29,12 +29,28 @@ local function show_all_diagnostics()
     all_diagnostics_buf = vim.api.nvim_create_buf(false, true)
     vim.bo[all_diagnostics_buf].bufhidden = 'wipe'
     vim.api.nvim_buf_set_name(all_diagnostics_buf, 'rust://diagnostics')
+    local origin_win = vim.api.nvim_get_current_win()
     vim.cmd('botright split')
-    vim.api.nvim_win_set_buf(0, all_diagnostics_buf)
+    local win = vim.api.nvim_get_current_win()
+    vim.api.nvim_win_set_buf(win, all_diagnostics_buf)
     -- A terminal buffer turns rustc's ANSI colours into highlights.
     local chan = vim.api.nvim_open_term(all_diagnostics_buf, {})
     vim.api.nvim_chan_send(chan, (vim.trim(rendered):gsub('\n', '\r\n')))
     vim.keymap.set('n', 'q', '<cmd>close<CR>', { buffer = all_diagnostics_buf, desc = 'Close' })
+    -- Closing a full-width bottom split can hand focus to the file tree;
+    -- go back to the window it was opened from, however it gets closed.
+    vim.api.nvim_create_autocmd('WinClosed', {
+        pattern = tostring(win),
+        once = true,
+        callback = function()
+            if vim.api.nvim_get_current_win() ~= win then return end
+            vim.schedule(function()
+                if vim.api.nvim_win_is_valid(origin_win) then
+                    vim.api.nvim_set_current_win(origin_win)
+                end
+            end)
+        end,
+    })
 end
 
 return {
