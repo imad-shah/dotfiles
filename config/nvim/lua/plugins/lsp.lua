@@ -1,3 +1,18 @@
+-- Every Python diagnostic in the open files (basedpyright and ruff only check
+-- those), laid out like rustc's errors in one bottom split, as Rust's
+-- <leader>rD shows them.
+local function show_all_python_diagnostics()
+    local diagnostics = vim.tbl_filter(function(d)
+        return vim.bo[d.bufnr].filetype == 'python'
+    end, vim.diagnostic.get())
+    if #diagnostics == 0 then
+        vim.notify('No Python diagnostics.', vim.log.levels.INFO)
+        return
+    end
+    local split = require('config.diagnostics')
+    split.show_in_split('python://diagnostics', diagnostics, split.render)
+end
+
 return {
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -60,8 +75,8 @@ return {
         vim.api.nvim_create_autocmd('BufWritePre', {
             pattern = '*.go',
             callback = function()
-                local params = vim.lsp.util.make_range_params(0, 'utf-8')
-                params.context = { only = { 'source.organizeImports' } }
+                local params = vim.lsp.util.make_range_params(0, 'utf-8') --[[@as lsp.CodeActionParams]]
+                params.context = { only = { 'source.organizeImports' }, diagnostics = {} }
                 local results = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params, 1000)
                 for _, res in pairs(results or {}) do
                     for _, action in pairs(res.result or {}) do
@@ -104,6 +119,15 @@ return {
                 vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, opts)
                 vim.keymap.set({ 'n', 'x' }, '<F3>', function() vim.lsp.buf.format({ async = true }) end, opts)
                 vim.keymap.set('n', '<F4>', vim.lsp.buf.code_action, opts)
+
+                -- Python's take on Rust's full-error keys (plugins/rust.lua),
+                -- for messages that run past the edge of the window.
+                if vim.bo[event.buf].filetype == 'python' then
+                    vim.keymap.set('n', '<leader>rd', vim.diagnostic.open_float,
+                        { buffer = event.buf, desc = 'Python full error' })
+                    vim.keymap.set('n', '<leader>rD', show_all_python_diagnostics,
+                        { buffer = event.buf, desc = 'Python full errors (all)' })
+                end
 
                 -- Inlay hints (inferred types, parameter names): Neovim keeps
                 -- them off until asked, even when the server is set to send them.
@@ -222,7 +246,7 @@ return {
                 ['<CR>'] = cmp.mapping.confirm({ select = false }),
                 ['<C-f>'] = cmp.mapping.scroll_docs(5),
                 ['<C-u>'] = cmp.mapping.scroll_docs(-5),
-                ['<C-e>'] = cmp.mapping(function(fallback)
+                ['<C-e>'] = cmp.mapping(function()
                     if cmp.visible() then
                         cmp.abort()
                     else

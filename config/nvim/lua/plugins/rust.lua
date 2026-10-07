@@ -2,7 +2,6 @@
 -- `cargo build` prints it, in one bottom split. rust-analyzer only attaches
 -- the rendered text to cargo-check diagnostics, so its own native ones are
 -- left out (same as `RustLsp renderDiagnostic`).
-local all_diagnostics_buf
 local function show_all_diagnostics()
     local diagnostics = vim.iter(vim.diagnostic.get())
         :filter(function(d) return vim.tbl_get(d, 'user_data', 'lsp', 'data', 'rendered') ~= nil end)
@@ -11,46 +10,8 @@ local function show_all_diagnostics()
         vim.notify('No rendered Rust diagnostics.', vim.log.levels.INFO)
         return
     end
-    -- Errors first, then by file and position.
-    table.sort(diagnostics, function(a, b)
-        if a.severity ~= b.severity then return a.severity < b.severity end
-        local a_file, b_file = vim.api.nvim_buf_get_name(a.bufnr), vim.api.nvim_buf_get_name(b.bufnr)
-        if a_file ~= b_file then return a_file < b_file end
-        if a.lnum ~= b.lnum then return a.lnum < b.lnum end
-        return a.col < b.col
-    end)
-    local rendered = vim.iter(diagnostics)
-        :map(function(d) return d.user_data.lsp.data.rendered end)
-        :join('')
-
-    if all_diagnostics_buf and vim.api.nvim_buf_is_valid(all_diagnostics_buf) then
-        vim.api.nvim_buf_delete(all_diagnostics_buf, { force = true })
-    end
-    all_diagnostics_buf = vim.api.nvim_create_buf(false, true)
-    vim.bo[all_diagnostics_buf].bufhidden = 'wipe'
-    vim.api.nvim_buf_set_name(all_diagnostics_buf, 'rust://diagnostics')
-    local origin_win = vim.api.nvim_get_current_win()
-    vim.cmd('botright split')
-    local win = vim.api.nvim_get_current_win()
-    vim.api.nvim_win_set_buf(win, all_diagnostics_buf)
-    -- A terminal buffer turns rustc's ANSI colours into highlights.
-    local chan = vim.api.nvim_open_term(all_diagnostics_buf, {})
-    vim.api.nvim_chan_send(chan, (vim.trim(rendered):gsub('\n', '\r\n')))
-    vim.keymap.set('n', 'q', '<cmd>close<CR>', { buffer = all_diagnostics_buf, desc = 'Close' })
-    -- Closing a full-width bottom split can hand focus to the file tree;
-    -- go back to the window it was opened from, however it gets closed.
-    vim.api.nvim_create_autocmd('WinClosed', {
-        pattern = tostring(win),
-        once = true,
-        callback = function()
-            if vim.api.nvim_get_current_win() ~= win then return end
-            vim.schedule(function()
-                if vim.api.nvim_win_is_valid(origin_win) then
-                    vim.api.nvim_set_current_win(origin_win)
-                end
-            end)
-        end,
-    })
+    require('config.diagnostics').show_in_split('rust://diagnostics', diagnostics,
+        function(d) return d.user_data.lsp.data.rendered end)
 end
 
 return {
