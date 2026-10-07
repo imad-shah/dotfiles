@@ -15,6 +15,7 @@ Plugins:
 - **Key hints and statusline:** [keyhints.nvim](https://github.com/imad-shah/keyhints.nvim), or [which-key.nvim](https://github.com/folke/which-key.nvim) & [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim)
 - **Editing and UI:** [nvim-autopairs](https://github.com/windwp/nvim-autopairs), [neoscroll.nvim](https://github.com/karb94/neoscroll.nvim), [nvim-highlight-colors](https://github.com/brenoprata10/nvim-highlight-colors), [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim), [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons), [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
 - **Colorschemes:** [onedark.nvim](https://github.com/navarasu/onedark.nvim), with [rose-pine](https://github.com/rose-pine/neovim), [flow.nvim](https://github.com/0xstepit/flow.nvim), and [dracula.nvim](https://github.com/Mofiqul/dracula.nvim) commented out for switching
+- **Interview mode:** [`:Interview`](config/nvim/lua/config/interview.lua) turns Python buffers into a plain Google Doc, with no highlighting, language servers, completion, or autopairs, and switches on automatically for files under `~/dev/dsa`
 
 ## Setup
 
