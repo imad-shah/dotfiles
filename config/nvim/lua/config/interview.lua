@@ -2,13 +2,8 @@
 -- are run in: no highlighting, no language servers (so no diagnostics, hover,
 -- inlay hints or format-on-save), no completion and no auto-closed brackets.
 -- Run it again to get everything back. It lasts until Neovim exits.
---
--- It switches itself on for the first Python file opened under practice_dir,
--- unless :Interview has already been run; from then on only :Interview
--- changes it.
 
 local filetypes = { 'python' }
-local practice_dir = vim.fs.normalize('~/dev/dsa')
 
 local active = false
 local stopped_servers = {} -- LSP configs switched off, to switch back on
@@ -80,25 +75,8 @@ end
 local function toggle()
     active = not active
     if active then enable() else disable() end
-    -- Deferred so the first screen draw at startup does not wipe it.
-    local msg = 'Interview mode ' .. (active and 'on' or 'off')
-    vim.schedule(function() vim.notify(msg) end)
+    vim.notify('Interview mode ' .. (active and 'on' or 'off'))
 end
 
--- Before the file is read, so its language servers never start.
-local auto_group = vim.api.nvim_create_augroup('InterviewAuto', { clear = true })
-vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
-    group = auto_group,
-    callback = function(args)
-        if vim.fs.relpath(practice_dir, args.match)
-            and vim.list_contains(filetypes, vim.filetype.match({ filename = args.match })) then
-            toggle()
-            return true -- once per session
-        end
-    end,
-})
-
-vim.api.nvim_create_user_command('Interview', function()
-    vim.api.nvim_clear_autocmds({ group = auto_group })
-    toggle()
-end, { desc = 'Toggle interview mode: plain Python, no LSP, no completion' })
+vim.api.nvim_create_user_command('Interview', toggle,
+    { desc = 'Toggle interview mode: plain Python, no LSP, no completion' })
