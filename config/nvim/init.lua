@@ -1,6 +1,7 @@
 require('config.options')
 require('config.keybinds')
 require('config.lazy')
+require('config.interview')
 require('lualine').setup {
     options = {
         theme = 'auto',

@@ -32,6 +32,11 @@ return {
                     group = fmt_group,
                     buffer = args.buf,
                     callback = function()
+                        -- Save quietly once no server can format any more
+                        -- (stopped by :Interview or :lsp stop, or crashed).
+                        if #vim.lsp.get_clients({ bufnr = args.buf, method = 'textDocument/formatting' }) == 0 then
+                            return
+                        end
                         vim.lsp.buf.format({
                             bufnr = args.buf,
                             timeout_ms = 3000,
