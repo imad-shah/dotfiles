@@ -28,6 +28,79 @@ function M.apply(config, wezterm)
             mods = "CTRL",
             action = wezterm.action.SendString("\x1f"),
         },
+        -- Split right
+        {
+            key = 'RightArrow',
+            mods = 'CTRL|SHIFT',
+            action = wezterm.action.SplitPane {
+                direction = 'Right',
+                size = { Percent = 50 },
+            },
+        },
+
+        -- Split left
+        {
+            key = 'LeftArrow',
+            mods = 'CTRL|SHIFT',
+            action = wezterm.action.SplitPane {
+                direction = 'Left',
+                size = { Percent = 50 },
+            },
+        },
+
+        -- Split up
+        {
+            key = 'UpArrow',
+            mods = 'CTRL|SHIFT',
+            action = wezterm.action.SplitPane {
+                direction = 'Up',
+                size = { Percent = 50 },
+            },
+        },
+
+        -- Split down
+        {
+            key = 'DownArrow',
+            mods = 'CTRL|SHIFT',
+            action = wezterm.action.SplitPane {
+                direction = 'Down',
+                size = { Percent = 50 },
+            },
+        },
+        -- Navigate between panes
+        {
+            key = 'RightArrow',
+            mods = 'CTRL',
+            action = wezterm.action.ActivatePaneDirection 'Right',
+        },
+        {
+            key = 'LeftArrow',
+            mods = 'CTRL',
+            action = wezterm.action.ActivatePaneDirection 'Left',
+        },
+        {
+            key = 'UpArrow',
+            mods = 'CTRL',
+            action = wezterm.action.ActivatePaneDirection 'Up',
+        },
+        {
+            key = 'DownArrow',
+            mods = 'CTRL',
+            action = wezterm.action.ActivatePaneDirection 'Down',
+        },
+        -- Close current pane
+        {
+            key = 'w',
+            mods = 'CTRL|SHIFT',
+            action = wezterm.action.CloseCurrentPane {
+                confirm = false,
+            },
+        },
+        {
+            key = 'z',
+            mods = 'CTRL|SHIFT',
+            action = wezterm.action.TogglePaneZoomState,
+        },
     }
 
     config.colors = {
