@@ -9,6 +9,12 @@ return {
             view = {
                 relativenumber = true,
             },
+            on_attach = function(bufnr)
+                local api = require("nvim-tree.api")
+                api.config.mappings.default_on_attach(bufnr)
+                vim.keymap.set("n", "<C-s>", api.node.open.vertical,
+                    { buffer = bufnr, nowait = true, desc = "nvim-tree: Open: Vertical Split" })
+            end,
         })
 
         -- auto-close nvim when the tree is the last window

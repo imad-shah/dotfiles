@@ -5,7 +5,7 @@ function M.apply(config, wezterm)
     config.window_close_confirmation = "NeverPrompt"
 
     config.font_size = 13.0
-    config.window_background_opacity = 0.6
+    config.window_background_opacity = 0.7
     config.text_background_opacity = 1.0
     config.win32_system_backdrop = "Acrylic"
 
@@ -24,84 +24,14 @@ function M.apply(config, wezterm)
             action = wezterm.action.SendString("\x17"),
         },
         {
-            key = "r",
-            mods = "CTRL",
-            action = wezterm.action.SendString("\x1f"),
-        },
-        -- Split right
-        {
-            key = 'RightArrow',
+            key = 'r',
             mods = 'CTRL|SHIFT',
-            action = wezterm.action.SplitPane {
-                direction = 'Right',
-                size = { Percent = 50 },
-            },
-        },
-
-        -- Split left
-        {
-            key = 'LeftArrow',
-            mods = 'CTRL|SHIFT',
-            action = wezterm.action.SplitPane {
-                direction = 'Left',
-                size = { Percent = 50 },
-            },
-        },
-
-        -- Split up
-        {
-            key = 'UpArrow',
-            mods = 'CTRL|SHIFT',
-            action = wezterm.action.SplitPane {
-                direction = 'Up',
-                size = { Percent = 50 },
-            },
-        },
-
-        -- Split down
-        {
-            key = 'DownArrow',
-            mods = 'CTRL|SHIFT',
-            action = wezterm.action.SplitPane {
-                direction = 'Down',
-                size = { Percent = 50 },
-            },
-        },
-        -- Navigate between panes
-        {
-            key = 'RightArrow',
-            mods = 'CTRL',
-            action = wezterm.action.ActivatePaneDirection 'Right',
-        },
-        {
-            key = 'LeftArrow',
-            mods = 'CTRL',
-            action = wezterm.action.ActivatePaneDirection 'Left',
-        },
-        {
-            key = 'UpArrow',
-            mods = 'CTRL',
-            action = wezterm.action.ActivatePaneDirection 'Up',
-        },
-        {
-            key = 'DownArrow',
-            mods = 'CTRL',
-            action = wezterm.action.ActivatePaneDirection 'Down',
-        },
-        -- Close current pane
-        {
-            key = 'w',
-            mods = 'CTRL|SHIFT',
-            action = wezterm.action.CloseCurrentPane {
-                confirm = false,
-            },
-        },
-        {
-            key = 'z',
-            mods = 'CTRL|SHIFT',
-            action = wezterm.action.TogglePaneZoomState,
+            action = wezterm.action.ReloadConfiguration,
         },
     }
+    for _, key in ipairs(require("panes").keys("CTRL")) do
+        table.insert(config.keys, key)
+    end
 
     config.colors = {
         selection_fg = "#000000",

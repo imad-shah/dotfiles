@@ -24,11 +24,21 @@ alias zshrc='nvim ~/dotfiles/zsh/.zshrc'
 # Editor
 # -------------------------
 export EDITOR='nvim'
+export VISUAL='nvim'
 
 # -------------------------
 # Local binaries
 # -------------------------
 export PATH="$HOME/.local/bin:$PATH"
+
+# -------------------------
+# Terminal title
+# -------------------------
+# Reset the title at every prompt so WezTerm stops treating this pane as
+# Neovim (which titles itself "nvim ...") once Neovim exits.
+autoload -Uz add-zsh-hook
+_set_title() { print -Pn "\e]2;%~\a" }
+add-zsh-hook precmd _set_title
 
 # -------------------------
 # Starship prompt

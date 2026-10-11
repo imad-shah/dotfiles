@@ -37,3 +37,37 @@ Windows, since WezTerm runs outside WSL (PowerShell):
 ```powershell
 New-Item -ItemType SymbolicLink -Path "$HOME\.config\wezterm" -Target "\\wsl.localhost\FedoraLinux-42\home\<user>\dotfiles\config\wezterm"
 ```
+
+## Common keybinds
+
+Where macOS differs, keys are shown as Windows / macOS
+
+### Panes and splits
+
+The same keys work on WezTerm panes and Neovim splits: they act on Neovim's splits while Neovim is focused, and on WezTerm panes everywhere else. Moving or resizing past Neovim's outer edge carries on into the neighbouring WezTerm pane
+
+| Action | Key |
+|---|---|
+| Split in that direction | `Ctrl+Shift` / `Cmd+Shift` + arrow |
+| Move in that direction | `Ctrl` / `Cmd` + arrow |
+| Resize (moves the border that way) | `Alt` / left `Option` + arrow |
+| Close | `Ctrl+Shift+w` / `Cmd+Shift+w` |
+| Zoom (toggle) | `Ctrl+Shift+z` / `Cmd+Shift+z` |
+| Open file in a vertical split (Telescope, nvim-tree) | `Ctrl+s` (`Ctrl+v` on macOS too) |
+| Open file in a horizontal split (Telescope, nvim-tree) | `Ctrl+x` |
+
+### WezTerm general
+
+| Action | Key |
+|---|---|
+| Paste | `Ctrl+v` / `Cmd+v` |
+| Delete previous word | `Ctrl+Backspace` / left `Option+Backspace` |
+| Reload WezTerm config | `Ctrl+Shift+r` / `Cmd+r` |
+
+### Neovim markdown
+
+`<Space>` is the leader key. Press `<Space>` and pause to have which-key list everything under it
+
+| Action | Key |
+|---|---|
+| Toggle live preview in the browser (in a markdown file) | `<Space>md` |

@@ -27,14 +27,10 @@ return {
             "query",
         })
 
-        -- get_files instead of query.get: query.get caches its result, so a
-        -- miss would stick after the queries get installed
         local function has_query(lang, name)
             return #vim.treesitter.query.get_files(lang, name) > 0
         end
 
-        -- a parser alone is not enough: without a highlights query, starting
-        -- treesitter would just switch the regex syntax off
         local function ready(lang)
             return vim.treesitter.language.add(lang) and has_query(lang, "highlights")
         end
