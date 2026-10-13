@@ -1,6 +1,4 @@
-local function enable_transparency()
-    vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-end
+local transparent = true
 return {
     -- Rose Pine
     -- {
@@ -20,7 +18,6 @@ return {
     --             variant = "moon",
     --         })
     --         vim.cmd.colorscheme("rose-pine")
-    --         enable_transparency()
     --     end
     -- },
     -- Flow
@@ -41,7 +38,6 @@ return {
     --     config = function()
     --         require("flow").setup({})
     --         vim.cmd.colorscheme("flow")
-    --         -- enable_transparency()
     --     end
     -- },
     -- Dracula
@@ -49,7 +45,6 @@ return {
     --     "Mofiqul/dracula.nvim",
     --     config = function()
     --         vim.cmd.colorscheme("dracula")
-    --         -- enable_transparency()
     --     end
     -- },
     -- Onedark
@@ -58,10 +53,17 @@ return {
         priority = 1000,
         config = function()
             require("onedark").setup({
+                -- style = "cool",
                 style = "deep",
+                transparent = transparent,
+                lualine = { transparent = transparent },
+                diagnostics = { darker = false },
+                highlights = {
+                    LspInlayHint = { fg = "$grey", fmt = "italic" },
+                    Visual = { fg = "#dce4f2", bg = "#1d4f91" },
+                },
             })
             require("onedark").load()
-            enable_transparency()
         end,
     },
     {
