@@ -56,6 +56,10 @@ return {
                 style = "deep",
                 transparent = true,
                 lualine = { transparent = true },
+                colors = {
+                    fg = "#c1cbe0",
+                    grey = "#a7b6cf",
+                },
                 diagnostics = { darker = false },
                 highlights = {
                     LspInlayHint = { fg = "$grey", fmt = "italic" },
