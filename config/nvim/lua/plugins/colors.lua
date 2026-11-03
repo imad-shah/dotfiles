@@ -58,7 +58,7 @@ return {
                 lualine = { transparent = true },
                 colors = {
                     fg = "#c1cbe0",
-                    grey = "#a7b6cf",
+                    grey = "#8bb7ae",
                 },
                 diagnostics = { darker = false },
                 highlights = {
