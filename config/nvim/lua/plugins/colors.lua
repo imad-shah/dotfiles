@@ -1,3 +1,5 @@
+local comment_highlight = { fg = "#89c3e5", fmt = "italic" }
+
 return {
     -- Rose Pine
     -- {
@@ -62,6 +64,11 @@ return {
                 },
                 diagnostics = { darker = false },
                 highlights = {
+                    Comment = comment_highlight,
+                    SpecialComment = comment_highlight,
+                    ["@comment"] = comment_highlight,
+                    ["@comment.documentation"] = comment_highlight,
+                    TSComment = comment_highlight,
                     LspInlayHint = { fg = "$grey", fmt = "italic" },
                     Visual = { fg = "#dce4f2", bg = "#1d4f91" },
                 },
