@@ -1,6 +1,3 @@
-local function enable_transparency()
-    vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-end
 return {
     -- Rose Pine
     -- {
@@ -57,8 +54,8 @@ return {
             require("onedark").setup({
                 -- style = "cool",
                 style = "deep",
-                -- transparent = transparent,
-                -- lualine = { transparent = transparent },
+                transparent = true,
+                lualine = { transparent = true },
                 diagnostics = { darker = false },
                 highlights = {
                     LspInlayHint = { fg = "$grey", fmt = "italic" },
@@ -66,7 +63,6 @@ return {
                 },
             })
             require("onedark").load()
-            enable_transparency()
         end,
     },
     {
